@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { LivroView } from "../livros/LivroView";
 import { PesquisaLivros } from "../livros/pesquisa";
+import { Detalhes } from "../livros/LivroDetalhes";
 import styles from "./app.module.css";
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LivroView />} />
         <Route path="/pesquisa" element={<PesquisaLivros />} />
+        <Route path="/livros/:id" element={<Detalhes />} />
       </Routes>
     </Router>
   );
