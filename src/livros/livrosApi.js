@@ -17,3 +17,20 @@ export async function findAll() {
     );
   }
 }
+export async function findById(id) {
+  const requestInit = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: "Bearer 12121847",
+    },
+  };
+  const response = await fetch(
+    `https://api-books-dot-api-samples-423102.uc.r.appspot.com/api/books/${id}`,
+    requestInit
+  );
+  if (!response.ok) {
+    throw new Error("Livro não encontrado");
+  }
+  return await response.json();
+}
