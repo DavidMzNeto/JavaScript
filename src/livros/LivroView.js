@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { findAll } from "../livros/livrosApi";
 import { CardLivros } from "./card";
 import { Prateleira } from "../livros/prateleira";
@@ -12,6 +12,17 @@ export function LivroView() {
     ListaDeDesejos: [],
     Historico: [],
   });
+
+  useEffect(() => {
+    const dadosSalvos = localStorage.getItem("prateleiras");
+    if (dadosSalvos) {
+      setPrateleiras(JSON.parse(dadosSalvos));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("prateleiras", JSON.stringify(prateleiras));
+  }, [prateleiras]);
 
   function moverLivro(livro) {
     setPrateleiras((prevPrateleiras) => {
@@ -28,10 +39,7 @@ export function LivroView() {
         };
       }
 
-      if (
-        ListaDeDesejos.some((item) => item.id === livro.id) &&
-        LendoAtualmente.length === 0
-      ) {
+      if (ListaDeDesejos.some((item) => item.id === livro.id)) {
         return {
           ...prevPrateleiras,
           ListaDeDesejos: ListaDeDesejos.filter((item) => item.id !== livro.id),
@@ -65,7 +73,6 @@ export function LivroView() {
   return (
     <MDBContainer className="py-4">
       <MDBRow>
-        {/* Prateleiras */}
         {Object.entries(prateleiras).map(([categoria, livros]) => (
           <MDBCol size="12" md="4" className="mb-4" key={categoria}>
             <Prateleira
@@ -77,7 +84,6 @@ export function LivroView() {
         ))}
       </MDBRow>
 
-      {/* Botão de Carregar Livros */}
       <MDBRow>
         <MDBCol size="12" className="text-center">
           <button className="btn btn-primary" onClick={carregarLivros}>
