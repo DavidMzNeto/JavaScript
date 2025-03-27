@@ -1,2 +1,2 @@
-# EstanteLivros
+# JavaScript
 Created with CodeSandbox
